@@ -14,7 +14,7 @@ source("Gettranscript_function.R")
 source("Webscrapping_function.R")
 ######################################
 
-# Checking whether the information in the NRSR webpage is even accessible
+# Checking whether the information in the NCSR webpage is even accessible
 paths_allowed("www.nrsr.sk")
 
 # Start the RSelenium server
@@ -29,7 +29,7 @@ remDr <- rs_driver_object$client
 remDr$open()
 remDr$maxWindowSize()
 
-# Navigate to NRSR website containing the transcripts 
+# Navigate to NCSR website containing the transcripts 
 # www.nrsr.sk and then: Schôdze -> Rozprava -> Textový prepis rozpravy
 remDr$navigate("https://www.nrsr.sk/web/default.aspx?sid=schodze%2frozprava")
 
