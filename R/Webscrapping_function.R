@@ -1,4 +1,4 @@
-# Webscraping informations per each speaker
+# Webscraping informations (session number, date, speaker`s name, speech type and content of the transcript) per each speaker on a page 
 webscrape <- function(url) {
   page <- read_html(url)
   
