@@ -1,9 +1,9 @@
-# Mine text from the pop-out transcript windows 
+# Mine text from the pop-out transcript windows within the webscrape function 
 get_transcript <- function(transcript) {
   all_extracted_text <- list()
   all_urls <- list()
   
-  for(url in transcript){
+  for(url in transcript) {
     
     transcript_page  <-  read_html(url)
     
