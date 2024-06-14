@@ -17,7 +17,7 @@ remDr <- rs_driver_object$client
 remDr$open()
 remDr$maxWindowSize()
 
-# Navigate to NRSR website containing the list of all MPs  
+# Navigate to NCSR website containing the list of all MPs  
 # www.nrsr.sk and then: Poslanci -> Zoznam poslancov 
 remDr$navigate("https://www.nrsr.sk/web/Default.aspx?sid=poslanci/zoznam_abc")
 
