@@ -6,7 +6,7 @@ This repository provides:
 
 (1) R script and necessary functions to webscrape "new" transcripts of the parliamentary debates in the NCSR (5th-8th parliamentary term, 2010-2023) out of dynamic htlm content - `Scrapping_data_new.R`,
 
-(2) R script to webscrape "old" transcripts of the parliamentary debates in the NCSR (3d-4th parliamentary term, 2002-2010) out of authorized transcripts from downloadable docx. documents,
+(2) R script to webscrape "old" transcripts of the parliamentary debates in the NCSR (3rd-4th parliamentary term, 2002-2010) out of authorized transcripts from downloadable docx. documents,
 
 (3) R script to webscrape names and party affiliation of the MPs from the NCSR webpage, 
 
