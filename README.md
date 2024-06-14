@@ -8,7 +8,7 @@ This repository provides:
 
 (2) R script to webscrape "old" transcripts of the parliamentary debates in the NCSR (3rd-4th parliamentary term, 2002-2010) out of authorized transcripts from downloadable docx. documents,
 
-(3) R script to webscrape names and party affiliation of the MPs from the NCSR webpage, 
+(3) R script to webscrape names and party affiliation of the MPs from the NCSR webpage - `MPS_names.R`, 
 
 (4) R script to clean and manipulate the webscrapped transcripts, 
 
