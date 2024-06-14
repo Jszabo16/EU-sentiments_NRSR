@@ -1,3 +1,5 @@
+# Webscrappes party affiliation per each MP from his/her personal website 
+# Required for the `MPs_names.R`
 get_party <- function(links) {
   
   all_extracted_party <- list()
