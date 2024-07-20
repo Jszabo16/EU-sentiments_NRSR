@@ -1,0 +1,149 @@
+rm(list = ls())
+######################################
+load("C:/Users/jakub/OneDrive/Desktop/FSEV/FSEV_PC/SKEUDIFGOVRE/Transcripts_NRSR/Websrapping/Webscrapping/Final_data/final_data.RData")
+######################################
+library(tidyverse)
+library(quanteda)
+library(quanteda.textmodels)
+library(quanteda.textstats)
+library(quanteda.textplots)
+library(stm)
+library(stringi)
+######################################
+# Creating only EU-related subset 
+EU_flag <- c("brusel",
+             "euro",
+             "\\s+eu\\s+",
+             "\\s+e\u00fa\\s+", 
+             "eur\u00f3")
+
+EU_corp <- all_transcripts_cleaned %>% 
+  filter(party_affiliation != "MEP" & party_affiliation != "other" & party_affiliation != "president") %>% # removing presidents, MEPs and others 
+  # mutate(transcript = scraEP::unaccent(transcript)) %>% 
+  mutate(transcript = char_tolower(transcript)) %>% 
+  mutate(transcript = str_replace_all(transcript, "\\.", " ")) %>% 
+  mutate(transcript = str_replace_all(transcript, "\\,", " ")) %>% 
+  filter(grepl(paste(EU_flag, collapse = "|"), transcript))
+
+rm(all_transcripts_cleaned)
+
+# Finding number of char in each string 
+n_words <- stri_count_words(EU_corp$transcript)
+range(n_words)
+
+EU_corp <- EU_corp %>% 
+  mutate(n_words = stri_count_words(transcript)) %>% 
+  filter(n_words > 30) %>% 
+  select(-n_words)
+
+## Transforming the dataset into the document-feature matrix  
+corpus <- corpus(EU_corp, text_field = "transcript")
+#summary(corpus, n = 5)
+
+# Tokenization &  Pre-processing 
+token_EU <- corpus %>%
+  tokens(remove_numbers = TRUE, 
+         remove_punct = TRUE,
+         remove_symbols = TRUE,
+         remove_url = TRUE,
+         remove_separators = TRUE) %>%
+  tokens_remove(stopwords("sk", source = "stopwords-iso")) %>% 
+  tokens_remove(c("pán", "páni", "ktoré", "byť", "však", "ktorý", "ktorá", "ktorí", "potlesk")) 
+
+token_EU <- token_EU %>% 
+  tokens_replace("e\u00fa", "europ_unia", valuetype = "fixed") %>% 
+  tokens_select(min_nchar=3L) 
+
+
+# Error: cannot allocate vector of size... 
+rm(EU_corp)
+rm(corpus)
+rm(n_words)
+rm(EU_flag)
+
+token_EU <- token_EU %>% 
+  tokens_compound(list(c("eur\u00f3ps", "\u00fani"), 
+                       c("slovensk", "republik"), 
+                       c("eur\u00f3ps", "parl"),
+                       c("eur\u00f3ps", "komis"),
+                       c("eur\u00f3ps", "rada")), 
+                       valuetype = "regex")  
+
+# 3 and more compounds run too long                        
+#token_EU <- token_EU %>%                       
+#  tokens_compound(list(                          
+#                       c("rada", "eur\u00f3ps"), 
+#                       c("eur\u00f3ps", "centr", "bank"),
+#                       c("eur\u00f3ps", "dvor", "aud")),
+#                       #c("eur\u00f3ps", "menov", "u00fani"),
+#                       valuetype = "regex")  
+
+
+token_EU <- token_EU %>%                       
+  tokens_compound(list(c("n\u00e1rod", "rad"), 
+                       c("vl\u00e1da", "slov") 
+                       ), 
+                  valuetype = "regex")  
+
+dfm_EU <- token_EU %>% 
+  dfm(tolower = TRUE) %>% 
+  dfm_trim(min_termfreq = 11) 
+
+topfeatures(dfm_EU, 20)
+
+tstat_freq_EU <- textstat_frequency(dfm_EU, n = 25)
+
+ggplot(tstat_freq_EU, aes(x = frequency, y = reorder(feature, frequency))) +
+  geom_point() + 
+  labs(x = "Frequency", y = "Feature")
+
+############################################################
+# estimate the number of k topics
+dfm_EU_converted <- quanteda::convert(dfm_EU, to = "stm")
+
+k_search <- searchK(documents = dfm_EU_converted$documents,
+                    vocab = dfm_EU_converted$vocab,
+                    K = c(5, 10, 15, 20, 25, 30, 35))
+
+
+# Running the STM 
+dfm_EU_converted$meta$year <- as.numeric(dfm_EU_converted$meta$year)
+
+system.time({STM <- stm(documents = dfm_EU_converted$documents,
+                         vocab = dfm_EU_converted$vocab,
+                         prevalence =~ party_affiliation + s(year),
+                         content =~ party_affiliation, 
+                         K = 20, 
+                         max.em.its = 30, 
+                         data = dfm_EU_converted$meta,
+                         verbose = TRUE,
+                         init.type = "Spectral")})
+
+
+labelTopics(STM)
+plot(STM, type = "summary")
+
+findThoughts(STM, n = 2) # this does not work....see whethet problem does not lie in converting dfm object 
+
+prep <- estimateEffect(1:20 ~ s(year), 
+                       STM, 
+                       meta = dfm_EU_converted$meta, 
+                       uncertainty = "Global")
+
+summary(prep)
+
+plot(prep,
+     "year",
+     method = "continuous",
+     model = STM2,
+     printlegend = FALSE,
+     xaxt = "n",
+     xlab = "Year"
+     ,topics = c(6, 17, 14, 19, 1)
+)
+
+years <- seq(from = min(dfm_EU_converted$meta$year), to = max(dfm_EU_converted$meta$year), by = 1)
+axis(1, at = years, labels = years)
+
+
+
