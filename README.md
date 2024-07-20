@@ -8,17 +8,17 @@ This repository provides:
 
 (2) R script to webscrape "old" transcripts of the parliamentary debates in the NCSR (3rd-4th parliamentary term, 2002-2010) out of authorized transcripts from downloadable docx. documents,
 
-(3) R script to webscrape names and party affiliation of the MPs from the NCSR webpage - `MPs_names.R`, 
+(3) R script to webscrape "old" transcripts of the parliamentary debates in the NCSR (1st-2nd parliamentary term, 1994-2002) out of the digital archives of the joint Czech-Slovak parliamentary library,
 
-(4) R script to clean and manipulate the webscrapped transcripts, 
-
-(5) R script to analyze the collected corpus of the parliamentary debates in the NCSR (1994-2023) employing structural topic modelling, 
+(4) R script to webscrape names and party affiliation of the MPs from the NCSR webpage - `MPs_names.R`, 
 
 (5) RData containing processed transcripts for the 8 parliamentary terms in the NCSR (1994-2023), 
 
-(6) RData containing webscrapped names and party affiliation of the MPs for the 8 parliamentary terms in the NCSR (1994-2023) and 
+(6) R script to analyze the collected corpus of the parliamentary debates in the NCSR (1994-2023) employing structural topic modelling, 
 
-(7) Ready-to-knit Rmd file describing methodology, data manipulation and analysis of the parliamentary debates in the NCSR (1994-2023).  
+(7) RData containing webscrapped names and party affiliation of the MPs for the 8 parliamentary terms in the NCSR (1994-2023) and 
+
+(8) Ready-to-knit Rmd file describing methodology, data manipulation and analysis of the parliamentary debates in the NCSR (1994-2023).  
 
 
 # Further Information 
