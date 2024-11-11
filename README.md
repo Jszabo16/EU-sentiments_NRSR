@@ -1,6 +1,20 @@
 # Read Me
 
-In spite of the National Council of the Slovak Republic (NCSR) providing a relatively rich corpus of textual data from the parliamentary sessions 1994-2023, no previous work was done to collect, clean and process these transcripts into a compact dataset and analyze them. Focusing on 8 parliamentary terms of the NCSR: 1st (1994-1998), 2nd (1998-2002), 3rd (2002-2006), 4th (2006-2010), 5th (2010-2012), 6th (2012-2016), 7th (2016-2020) and 8th (2020-2023), I webscrape the available transcripts of the parliamentary debates from these 8 parliamentary terms from the NCSR webpage, process them and assign missing party affiliations to each speaker. After compiling all the processed data from the 8 parliamentary terms together into one dataset consisting of over 420 000 unique speaches. Subsequently, a structural topic model is ran to analyze underlying topic patterns on a subset of data containing references to the EU (approximately 10% of the dataset).  
+In spite of the National Council of the Slovak Republic (Národná rada Slovenskej republiky, hereafter "NRSR") providing a relatively rich corpus of textual data from the parliamentary sessions 1994-2023, no previous work was done to collect, clean and process these transcripts into a compact dataset and analyze them. Focusing on first 8 parliamentary terms of the NRSR: 1st (1994-1998), 2nd (1998-2002), 3rd (2002-2006), 4th (2006-2010), 5th (2010-2012), 6th (2012-2016), 7th (2016-2020) and 8th (2020-2023), I webscrape the available transcripts of the parliamentary debates from these 8 parliamentary terms from the NRSR webpage, process them and extend with additional information per each speech: 
+- sex of the speaker,
+- age of the speaker,
+- flag indicating whether the speaker is part of the oppositon/coalition,
+- flag indicating party leader,
+- party affiliations of the speaker,
+- party left/right scale,
+- party liberal/conservative scale. 
+
+Compiled dataset of all 8 parliamentary terns contains over 420 000 unique speaches. 
+
+
+Subsequently, 
+
+I subset of data containing references to the EU (approximately 10% of the dataset).  
 
 This repository provides: 
 
