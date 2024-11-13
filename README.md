@@ -1,40 +1,34 @@
 # Read Me
 
-In spite of the National Council of the Slovak Republic (Národná rada Slovenskej republiky, hereafter "NRSR") providing a relatively rich corpus of textual data from the parliamentary sessions 1994-2023, no previous work was done to collect, clean and process these transcripts into a compact dataset and analyze them. Focusing on first 8 parliamentary terms of the NRSR: 1st (1994-1998), 2nd (1998-2002), 3rd (2002-2006), 4th (2006-2010), 5th (2010-2012), 6th (2012-2016), 7th (2016-2020) and 8th (2020-2023), I webscrape the available transcripts of the parliamentary debates from these 8 parliamentary terms from the NRSR webpage, process them and extend with additional information per each speech: 
-- sex of the speaker,
-- age of the speaker,
-- flag indicating whether the speaker is part of the oppositon/coalition,
-- flag indicating party leader,
-- party affiliations of the speaker,
-- party left/right scale,
-- party liberal/conservative scale. 
+In spite of the National Council of the Slovak Republic (Národná rada Slovenskej republiky, hereafter "NRSR") providing a relatively rich corpus of textual data, no previous work was done to collect, clean and process these transcripts into a compact dataset and analyze them. In this research, I webscrape the available transcripts of the NRSR parliamentary speeches for the first 8 parliamentary terms (1994-2023), process them and extend with additional information per each speech. Compiled dataset of all the 8 parliamentary terms contains over 420 000 unique speaches of MPs and government ministers with the following information:
+- `Term`: number indicating parliamentary term (1 - 1994/1998, 2 - 1998/2002, 3  - 2002/2006, 4 - 2006/2010, 5 - 2010/2012, 6 - 2012/2016, 7 - 2016/2020 and 8 - 2020/2023),
+- `Session`: number indicating session number within a parliamentary term,
+- `Date`: date when the speech was delivered,
+- `Year`: year when the speech was delivered,
+- `Name`: name of the speaker who delivered the speech,
+- `Age`: achieved age of the speaker in the year the speech was delivered (year of the birth - year),
+- `Gender`: biological sex of the speaker (female/male),
+- `Party`: party affiliation of the speaker assigned based on the party ballot on which the speaker was elected into the NRSR or, if applicable, based on the party that nominated the speaker to their position (ministerial nominees),
+- `Opposition`: flag indicating whether the party is part of the coalition or opposition (opposition - 1, coalition - 0),
+- `Minister`: flag indicating whether the speaker is in ministerial position, i.e. part of the government (minister - 1, non-minister/MP - 0),
+- `Leader`: flag indicating whether the speaker is a party leader, i.e. chairman of the party (party leader - 1, ordinary member - 0),
+- `Left_right`: party left-righ scale based on the Manifesto Project data, 
+- `Conservative_liberal`: party conservative-liberal scale based on the Manifesto Project data,   
+- `Transcript`: parliamentary speech delivered by the speeker. 
 
-Compiled dataset of all 8 parliamentary terns contains over 420 000 unique speaches. 
-
-
-Subsequently, 
-
-I subset of data containing references to the EU (approximately 10% of the dataset).  
+In the second step, this research estimates sentiments towards the European Union (hereafter "EU") on a subset of over 12,000 speeches containing some EU-related reference (e.g., European, EU, Brussels etc.). To estimate the sentiments, I rely on aspect-based sentiment analysis using BERT language model. Consequently, a structural topic model with sentiment and other meta data-related covariates is run to reveal which topics are associated with negative sentiments towards the EU.   
 
 This repository provides: 
 
-(1) R script and necessary functions to webscrape "new" transcripts of the parliamentary debates in the NCSR (5th-8th parliamentary term, 2010-2023) out of dynamic htlm content - `Scrapping_data_new.R`,
-
-(2) R script to webscrape "old" transcripts of the parliamentary debates in the NCSR (3rd-4th parliamentary term, 2002-2010) out of authorized transcripts from downloadable docx. documents,
-
-(3) R script to webscrape "old" transcripts of the parliamentary debates in the NCSR (1st-2nd parliamentary term, 1994-2002) out of the digital archives of the joint Czech-Slovak parliamentary library,
-
-(4) R script to webscrape names and party affiliation of the MPs from the NCSR webpage - `MPs_names.R`, 
-
-(5) RData containing processed transcripts for the 8 parliamentary terms in the NCSR (1994-2023), 
-
-(6) R script to analyze the collected corpus of the parliamentary debates in the NCSR (1994-2023) employing structural topic modelling, 
-
-(7) RData containing webscrapped names and party affiliation of the MPs for the 8 parliamentary terms in the NCSR (1994-2023) and 
-
-(8) Ready-to-knit Rmd file describing methodology, data manipulation and analysis of the parliamentary debates in the NCSR (1994-2023).  
+(1) RData and csv files (`NRSR_parl_speeches`) containing webscrapped and pre-processed parliamentary speeches with additional information per each speaker for the 8 parliamentary terms in the NRSR (1994-2023), 
+(2) Python script for the aspect-based sentiment analysis using BERT language model to estimate sentiments towards the EU in the NRSR parliamentary speeches (1994-2023), 
+(3) R script for the ex-post analysis of the estimated sentiments towards the EU from the NRSR parliamentary speeches (1994-2023),    
+(4) R script for the estimation and description of the structural topic models with the sentiment and other meta data-related covariates, 
+(5) Rmd file describing the proces of webscrapping, pre-processing, compiling and extending the `NRSR_parl_speeches` with additional information, 
+(6) Rmd file wih the manuscript titled *Analyzing Sentiments towards the European Union in Slovak Parliamentary Speeches (1994–2023)* that was submitted to , 
+(7) Rmd file with the accompgnying appendix to the manuscript. 
 
 
 # Further Information 
 
-This is still a work in progress. It is thus at a stage where all comments are very welcome. You can get in touch with me on jakub.szabo@uniba.sk 
+This is still a work in progress. It is thus at a stage where all comments are very welcome. You can get in touch with me on jakub.szabo@uniba.sk. 
